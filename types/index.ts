@@ -6,12 +6,18 @@ export interface CustomButtonProps {
   handleClick?: MouseEventHandler<HTMLButtonElement>;
   btnType?: "button" | "submit";
   textStyles?: string;
-  rightIcon?: string
-  isDisabled?: boolean
+  rightIcon?: string;
+  isDisabled?: boolean;
 }
 
 export interface CustomFilterProps {
   title: string;
+  options: Array<OptionProps>;
+}
+
+export interface OptionProps {
+  title: string;
+  value: string;
 }
 
 export interface SearchManufacturerProps {
@@ -23,7 +29,7 @@ export interface CarCardProps {
   car: Car;
 }
 
-type Car = {
+export type Car = {
   city_mpg: number;
   class: string;
   combination_mpg: number;
@@ -37,3 +43,22 @@ type Car = {
   transmission: string;
   year: number;
 };
+
+export interface CarDetailsProps {
+  isOpen: boolean;
+  closeModal: () => void;
+  car: Car;
+}
+
+export interface FetchCarsProps {
+  manufacturer: string;
+  year: number;
+  fuel: string;
+  limit: number;
+  model: string;
+}
+
+export interface ShowMoreProps {
+  pageNumber: number;
+  isNext: boolean;
+}

@@ -6,17 +6,18 @@ import Image from "next/image";
 
 // components
 import CustomButton from "./CustomButton";
+import CarDetails from "./CarDetails";
 
 // types
 import { CarCardProps } from "@/types";
 
 // utils
-import { calculateCarRent } from "@/utils";
+import { calculateCarRent, generateCarImageUrl } from "@/utils";
 
 export default function CarCard({ car }: CarCardProps) {
   const { city_mpg, year, make, model, transmission, drive } = car;
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const carRent = calculateCarRent(city_mpg, year);
 
@@ -36,7 +37,7 @@ export default function CarCard({ car }: CarCardProps) {
 
       <div className="relative w-full h-40 my-3 object-contain">
         <Image
-          src="/hero.png"
+          src={generateCarImageUrl(car)}
           alt="car image"
           fill
           priority
@@ -79,6 +80,12 @@ export default function CarCard({ car }: CarCardProps) {
           />
         </div>
       </div>
+
+      <CarDetails
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 }

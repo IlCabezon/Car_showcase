@@ -8,50 +8,35 @@ import { useRouter } from "next/navigation";
 // components
 import { SearchManufacturer } from "./";
 
-export default function SearchBar() {
+// types
+import { SearchBarProps } from "@/types";
+
+export default function SearchBar({
+  setManufacturer,
+  setModel,
+}: SearchBarProps) {
   const router = useRouter();
 
-  const [manufacturer, setManufacturer] = useState("");
-  const [model, setModel] = useState("");
+  const [searchManufacturer, setSearchManufacturer] = useState("");
+  const [searchModel, setSearchModel] = useState("");
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!manufacturer.trim() && !model.trim()) {
+    if (!searchManufacturer.trim() && !searchModel.trim()) {
       return alert("Please fill in the search bar");
     }
 
-    updateSearchParams(model, manufacturer)
-  };
-
-  const updateSearchParams = (model: string, manufacturer: string) => {
-    const searchParams = new URLSearchParams(window.location.search);
-
-    if (model) {
-      searchParams.set("model", model);
-    } else {
-      searchParams.delete("model");
-    }
-
-    if (manufacturer) {
-      searchParams.set("manufacturer", manufacturer);
-    } else {
-      searchParams.delete("manufacturer");
-    }
-
-    const newPathName = `${
-      window.location.pathname
-    }?${searchParams.toString()}`;
-
-    router.push(newPathName);
+    setModel(searchModel);
+    setManufacturer(searchManufacturer);
   };
 
   return (
     <form className="searchbar" onSubmit={handleSearch}>
       <div className="searchbar__item">
         <SearchManufacturer
-          manufacturer={manufacturer}
-          setManufacturer={setManufacturer}
+          selected={searchManufacturer}
+          setSelected={setSearchManufacturer}
         />
 
         <SearchButton searchButtonClasses="sm:hidden" />
@@ -68,8 +53,8 @@ export default function SearchBar() {
         <input
           type="text"
           name="model"
-          value={model}
-          onChange={({ target }) => setModel(target.value)}
+          value={searchModel}
+          onChange={({ target }) => setSearchModel(target.value)}
           placeholder="Tiguan"
           className="searchbar__input"
         />

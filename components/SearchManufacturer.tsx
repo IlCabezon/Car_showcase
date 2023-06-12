@@ -14,8 +14,8 @@ import { SearchManufacturerProps } from "@/types";
 import { manufacturers } from "@/constants";
 
 export default function SearchManufacturer({
-  manufacturer,
-  setManufacturer,
+  selected,
+  setSelected,
 }: SearchManufacturerProps) {
   const {
     Button: ComboboxButton,
@@ -40,7 +40,7 @@ export default function SearchManufacturer({
 
   return (
     <div className="search-manufacturer">
-      <Combobox value={manufacturer} onChange={setManufacturer}>
+      <Combobox value={selected} onChange={setSelected}>
         <div className="relative w-full">
           <ComboboxButton className="absolute top-[14px]">
             <Image
